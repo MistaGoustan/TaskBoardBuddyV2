@@ -1,0 +1,23 @@
+﻿@model HomeViewModel
+
+<div class="text-center">
+    <h4>Dashboard</h4>
+
+    <div class="float-left">
+        <p>Total Tasks: @Model.TaskItems.Count()</p>
+    </div>
+
+    <div class="float-right">
+        <p class="float-left">Filter by:&nbsp;</p>
+        
+        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange="GetFilteredTaskBoard(this.value)"})
+    </div>
+</div>
+
+
+@*TODO PULL THIS OUT*@
+<script>
+    function GetFilteredTaskBoard(val) {
+        window.location.href = val;
+    }
+</script>

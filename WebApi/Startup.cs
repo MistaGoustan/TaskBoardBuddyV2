@@ -1,10 +1,12 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Context;
 
 namespace WebApi
 {
@@ -20,6 +22,9 @@ namespace WebApi
         {
             // TODO: why not services.AddMvcCore(); whats the difference 
             services.AddMvc();
+
+            services.AddDbContext<TaskItemDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("TaskBoardBuddyDb")));
+            services.AddSingleton(Configuration);
 
             services.AddSwaggerGen(c =>
             {
