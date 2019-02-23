@@ -1,0 +1,43 @@
+﻿@model TaskBoardBuddy.API.Models.TaskBoardViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>TaskId</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>State</th>
+            <th>Created Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tasks)
+        {
+            var isActive = item.State == "ACTIVE";
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TaskId)</td>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+
+                @if (isActive)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.State)</td>
+                }
+                else
+                {
+                    <td style="color:green; font-weight: bolder;">@Html.DisplayFor(modelItem => item.State)</td>
+                }
+
+                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                <td>
+                    @{
+                        var stateText = $"Mark {(isActive ? "Completed" : "Active")}";
+                    }
+                    @Html.ActionLink(stateText, "ChangeState", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "DeleteTask", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

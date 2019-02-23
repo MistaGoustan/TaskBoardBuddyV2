@@ -1,0 +1,10 @@
+﻿@model TaskBoardBuddy.API.Models.TaskBoardViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@await Html.PartialAsync("_NewTask", new TaskBoardBuddy.Models.Task())
+
+@await Html.PartialAsync("_TaskBoardDash")
+
+@await Html.PartialAsync("_TaskBoard")

@@ -1,0 +1,17 @@
+﻿@model TaskBoardBuddy.Models.Task
+
+<div class="text-center">
+    <h6>Create New Task</h6>
+
+    <div class="float-right">
+        <button>Save New Task</button>
+    </div>
+
+    <div id="new-task">
+        Title:
+        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+
+        Description:
+        @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+    </div>
+</div>

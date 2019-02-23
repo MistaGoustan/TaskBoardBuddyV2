@@ -1,0 +1,26 @@
+﻿@model TaskBoardBuddy.API.Models.TaskBoardViewModel
+
+<div id="task-board-dash">
+    <h4>Tasks</h4>
+
+    <div id="task-board-dash-left">
+        <p>Total Tasks: @Model.Tasks.Count()</p>
+    </div>
+
+    <div id="task-board-dash-right">
+        <p class="float-left">Filter by:</p>
+        @Html.DropDownListFor(m => m.FilterState, new SelectListItem[]
+        {
+            new SelectListItem() { Text = "All", Value = "ALL" },
+            new SelectListItem() { Text = "Active", Value = "ACTIVE" },
+            new SelectListItem() { Text = "Completed", Value = "COMPLETED" }},
+            new { @onchange="GetFilteredTaskBoard(this.value)"
+        })
+    </div>
+</div>
+
+<script>
+    function GetFilteredTaskBoard(val) {
+        window.location.href = val;
+    }
+</script>
