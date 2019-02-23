@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -11,43 +10,41 @@ namespace WebApi
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
+        public IConfiguration Configuration { get; }
 
-        public IConfigurationRoot Configuration { get; }
+        public Startup(IConfiguration configuration)
+            => Configuration = configuration;
 
         // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // TODO: why not services.AddMvcCore(); whats the difference 
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Task Board Buddy", Version = "v1" });
-
                 c.DescribeAllEnumsAsStrings();
-                
                 c.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "WebApi.xml"));
             });
         }
 
         // Configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseMvc();
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            else
+                app.UseExceptionHandler("/Home/Error");
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
 
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api V1");
             });
         }
     }
