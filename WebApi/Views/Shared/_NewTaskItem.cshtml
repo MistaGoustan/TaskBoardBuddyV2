@@ -4,10 +4,14 @@
     <h6>Create New Task</h6>
 
     <div class="new-task-block">
-        <div style="width:80%;">
-            @Html.TextBoxFor(model => model.Title, new { placeholder = "Title", @class = "new-task-text-box" })
-        </div>
-        <button style="width:20%;">save new task</button>
+        @Html.TextBoxFor(model => model.Title,
+                                  new { placeholder = "Title",
+                                        @class = "new-task-text-box" })
+        <form action="" method="post">
+            <input formaction="Home/SaveNewTaskItem" type="submit" style="height:100%;" value="Save New Task" />
+        </form>
     </div>
-    @Html.TextBoxFor(model => model.Description, new { placeholder = "Description", @class = "new-task-text-box" })
+    @Html.TextBoxFor(model => model.Description,
+                              new { placeholder = "Description",
+                                    @class = "new-task-text-box" })
 </div>

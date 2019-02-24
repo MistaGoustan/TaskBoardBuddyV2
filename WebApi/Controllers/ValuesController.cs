@@ -3,7 +3,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     public class ValuesController : Controller
     {
         /// <summary>
@@ -12,7 +12,6 @@ namespace WebApi.Controllers
         /// <param name="fooRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/values/FooValue")]
         public FooResponse GetFoo([FromBody]FooRequest fooRequest)
         {
             return new FooResponse { Id = 1, FooText = "Foooooo" };
