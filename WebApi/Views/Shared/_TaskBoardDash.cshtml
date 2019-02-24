@@ -1,11 +1,23 @@
 ﻿@model HomeViewModel
+@{ 
+    var totalTasks = Model.TaskItems.Count();
+
+    var totalActiveTasks = Model.TaskItems
+                                .Where(taskItem => taskItem.State == TaskItemStates.Active.ToString().ToUpper())
+                                .Count();
+
+    var totalCompletedTasks = Model.TaskItems
+                                   .Where(taskItem => taskItem.State == TaskItemStates.Completed.ToString().ToUpper())
+                                   .Count();
+}
 
 <div class="text-center">
     <h4>Dashboard</h4>
 
-    <div class="float-left">
-        <p>Total Tasks: @Model.TaskItems.Count()</p>
-    </div>
+    <p class="float-left">Total Tasks: @totalTasks&ensp;
+        - &ensp;Active: @totalActiveTasks&ensp;
+        - &ensp;Completed: @totalCompletedTasks
+    </p>
 
     <div class="float-right">
         <p class="float-left">Filter by:&nbsp;</p>
