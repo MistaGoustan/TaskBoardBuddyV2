@@ -1,0 +1,13 @@
+﻿@model WebApi.Context.TaskItem
+
+<div class="new-task-container">
+    <h6>Create New Task</h6>
+
+    <div class="new-task-block">
+        <div style="width:80%;">
+            @Html.TextBoxFor(model => model.Title, new { placeholder = "Title", @class = "new-task-text-box" })
+        </div>
+        <button style="width:20%;">save new task</button>
+    </div>
+    @Html.TextBoxFor(model => model.Description, new { placeholder = "Description", @class = "new-task-text-box" })
+</div>

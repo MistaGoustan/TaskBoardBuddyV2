@@ -3,5 +3,6 @@
     ViewData["Title"] = "Dashboard";
 }
 
+@await Html.PartialAsync("_NewTaskItem", new WebApi.Context.TaskItem())
 @await Html.PartialAsync("_TaskBoardDash")
 @await Html.PartialAsync("_TaskBoard", Model.TaskItems)
