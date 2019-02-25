@@ -1,6 +1,6 @@
 ## TaskBoardBuddyV2
 
-This is v2 of TBB. TBBv2 is much less complacated when it comes to programming patterns as well as small things that would have otherwise just cost more time in the long run (for example: magic strings > enums). I didnt want to give up on learning/playin with less familiar tech, its all a balancing act i tell ya.
+This is v2 of TBB. TBBv2 is much less complicated when it comes to programming patterns as well as small things that would have otherwise just cost more time in the long run (for example: magic strings > enums). I didnt want to give up on learning/playin with less familiar tech, its all a balancing act i tell ya.
 
 ### Project Details
 - Self hosted
