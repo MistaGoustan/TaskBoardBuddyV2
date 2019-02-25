@@ -8,16 +8,9 @@
     <DocumentationFile>bin\Debug\netcoreapp2.2\WebApi.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="OldTaskBoardBuddyFiles\**" />
-    <Content Remove="OldTaskBoardBuddyFiles\**" />
-    <EmbeddedResource Remove="OldTaskBoardBuddyFiles\**" />
-    <None Remove="OldTaskBoardBuddyFiles\**" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">

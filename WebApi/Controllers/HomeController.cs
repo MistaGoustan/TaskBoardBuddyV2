@@ -23,12 +23,14 @@ namespace TaskBoardBuddy.API.Controllers
         {
             using (var context = new TaskItemDbContext(_optionsBuilder.Options))
             {
-                filterState = filterState.ToUpper();
+                filterState = filterState != null 
+                    ? filterState.ToUpper()
+                    : string.Empty;
 
                 var taskItems = context.TaskItems.ToList();
                 var taskItemViewModels = new List<TaskItemViewModel>();
 
-                if (filterState == "ACTIVE" || filterState == "COMPLTED")
+                if (filterState == "ACTIVE" || filterState == "COMPLETED")
                     taskItems = taskItems.Where(item => item.State == filterState).ToList();
                 else
                     filterState = "ALL";
