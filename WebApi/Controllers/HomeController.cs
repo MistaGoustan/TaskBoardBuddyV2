@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,7 +21,42 @@ namespace TaskBoardBuddy.API.Controllers
         {
             using (var context = new TaskItemDbContext(_optionsBuilder.Options))
             {
-                return View(new HomeViewModel { TaskItems = context.TaskItems.ToList() });
+                var taskItems = new List<TaskItemViewModel>();
+
+                foreach (var item in context.TaskItems.ToList())
+                {
+                    taskItems.Add(new TaskItemViewModel
+                    {
+                        TaskItemId = item.TaskItemId,
+                        Title = item.Title,
+                        Description = item.Description,
+                        State = item.State,
+                        CreatedDate = item.CreatedDate
+                    });
+                }
+
+                return View(new HomeViewModel { TaskItems = taskItems });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Save(TaskItemViewModel viewModel)
+        {
+            using (var context = new TaskItemDbContext(_optionsBuilder.Options))
+            {
+                var taskItem = new TaskItemModel
+                {
+                    TaskItemId = 0,
+                    Title = viewModel.Title,
+                    Description = viewModel.Description,
+                    State = "ACTIVE",
+                    CreatedDate = DateTime.Now
+                };
+
+                context.Add(taskItem);
+                context.SaveChanges();
+
+                return RedirectToAction("Index"); // TODO
             }
         }
 
@@ -29,36 +65,5 @@ namespace TaskBoardBuddy.API.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        //[Route("")]
-        //[Route("api/Home")]
-        //[Route("api/Home/Index")]
-        //public IActionResult Index()
-        //{
-        //    using (var context = new TaskItemDbContext(_optionsBuilder.Options))
-        //    {
-        //        return View(new HomeViewModel { TaskItems = context.TaskItems.ToList() });
-        //    }
-        //}
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //[Route("[action]")]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
-
-        //[HttpPost]
-        //[Route("[action]")]
-        //public void SaveNewTaskItem(TaskItem taskItem)
-        //{
-        //    using (var context = new TaskItemDbContext(_optionsBuilder.Options))
-        //    {
-        //        context.Add(taskItem);
-        //        context.SaveChanges();
-
-        //        return View(new HomeViewModel { TaskItems = context.TaskItems.ToList() });
-        //    }
-        //}
     }
 }

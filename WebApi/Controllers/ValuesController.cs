@@ -3,7 +3,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class ValuesController : Controller
     {
         /// <summary>

@@ -1,17 +1,18 @@
-﻿@model WebApi.Context.TaskItem
+﻿@model TaskItemViewModel
+@using (Html.BeginForm("Save", "Home"))
+{
+    <div class="new-task-container">
+        <h6>Create New Task</h6>
 
-<div class="new-task-container">
-    <h6>Create New Task</h6>
+        <div class="new-task-block">
+            @Html.TextBoxFor(model => model.Title,
+                                   new { placeholder = "Title",
+                                       @class = "new-task-text-box" })
 
-    <div class="new-task-block">
-        @Html.TextBoxFor(model => model.Title,
-                                  new { placeholder = "Title",
+            <input type="submit" value="Save Task" />
+        </div>
+        @Html.TextBoxFor(model => model.Description,
+                                  new { placeholder = "Description",
                                         @class = "new-task-text-box" })
-        <form action="" method="post">
-            <input formaction="Home/SaveNewTaskItem" type="submit" style="height:100%;" value="Save New Task" />
-        </form>
     </div>
-    @Html.TextBoxFor(model => model.Description,
-                              new { placeholder = "Description",
-                                    @class = "new-task-text-box" })
-</div>
+}

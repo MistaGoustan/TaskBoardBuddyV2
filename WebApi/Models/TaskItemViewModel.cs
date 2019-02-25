@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace WebApi.Context
+namespace WebApi.Models
+
 {
-    public class TaskItem
+    public class TaskItemViewModel
     {
         public int TaskItemId { get; set; }
         public string Title { get; set; }
