@@ -17,15 +17,22 @@ namespace TaskBoardBuddy.API.Controllers
         public HomeController(IConfiguration configuration)
             => _optionsBuilder.UseSqlServer(configuration.GetConnectionString("TaskBoardBuddyDb"));
 
-        public IActionResult Index()
+        [HttpGet("")]
+        [HttpGet("{filterId}")]
+        public IActionResult Index(string filterId)
         {
             using (var context = new TaskItemDbContext(_optionsBuilder.Options))
             {
-                var taskItems = new List<TaskItemViewModel>();
+                var taskItems = context.TaskItems.ToList();
+                var filterState = TaskItemFilterStates.All;
+                var taskItemViewModels = new List<TaskItemViewModel>();
 
-                foreach (var item in context.TaskItems.ToList())
+                if (Enum.TryParse(filterId, out filterState) && !filterState.Equals(TaskItemFilterStates.All))
+                    taskItems = taskItems.Where(item => item.State == filterState.ToString().ToUpper()).ToList();
+
+                foreach (var item in taskItems)
                 {
-                    taskItems.Add(new TaskItemViewModel
+                    taskItemViewModels.Add(new TaskItemViewModel
                     {
                         TaskItemId = item.TaskItemId,
                         Title = item.Title,
@@ -35,11 +42,28 @@ namespace TaskBoardBuddy.API.Controllers
                     });
                 }
 
-                return View(new HomeViewModel { TaskItems = taskItems });
+                return View(new HomeViewModel { TaskItems = taskItemViewModels, FilterState = filterState });
             }
         }
 
-        [HttpPost]
+        [HttpGet("[action]/{taskItemId}")]
+        public IActionResult ChangeState(string taskItemId)
+        {
+            using (var context = new TaskItemDbContext(_optionsBuilder.Options))
+            {
+                if (int.TryParse(taskItemId, out int id))
+                {
+                    var taskItem = context.TaskItems.Single(item => item.TaskItemId == id);
+                    
+                    taskItem.State = taskItem.State == "ACTIVE" ? "COMPLETED" : "ACTIVE";
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("Index"); // TODO
+            }
+        }
+
+        [HttpPost("[action]")]
         public IActionResult Save(TaskItemViewModel viewModel)
         {
             using (var context = new TaskItemDbContext(_optionsBuilder.Options))
@@ -55,6 +79,21 @@ namespace TaskBoardBuddy.API.Controllers
 
                 context.Add(taskItem);
                 context.SaveChanges();
+
+                return RedirectToAction("Index"); // TODO
+            }
+        }
+
+        [HttpGet("[action]/{taskItemId}")]
+        public IActionResult Delete(string taskItemId)
+        {
+            using (var context = new TaskItemDbContext(_optionsBuilder.Options))
+            {
+                if (int.TryParse(taskItemId, out int id))
+                {
+                    context.TaskItems.Remove(context.TaskItems.Single(item => item.TaskItemId == id));
+                    context.SaveChanges();
+                }
 
                 return RedirectToAction("Index"); // TODO
             }

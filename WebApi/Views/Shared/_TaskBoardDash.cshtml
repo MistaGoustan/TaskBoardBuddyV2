@@ -23,7 +23,7 @@
     <div class="float-right">
         <p class="float-left">Filter by:&nbsp;</p>
 
-        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange = "GetFilteredTaskBoard(this.value)" })
+        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange = "FilterTasks(this.value)" })
 
         @using (Html.BeginForm("DeleteAll", "Home", FormMethod.Post, new { @class = "task-board-dash-block" }))
         {
@@ -31,11 +31,3 @@
         }
     </div>
 </div>
-
-
-@*TODO PULL THIS OUT*@
-<script>
-    function GetFilteredTaskBoard(val) {
-        window.location.href = val;
-    }
-</script>

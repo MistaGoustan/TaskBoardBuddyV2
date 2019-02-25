@@ -34,8 +34,8 @@
                     @{
                         var stateText = $"Mark {(isActive ? "Completed" : "Active")}";
                     }
-                    @Html.ActionLink(stateText, "ChangeState", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "DeleteTask", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink(stateText, "ChangeState", new { item.TaskItemId }) |
+                    @Html.ActionLink("Delete", "Delete", new { item.TaskItemId }) |
                 </td>
             </tr>
         }
