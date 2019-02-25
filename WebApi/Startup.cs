@@ -20,7 +20,6 @@ namespace WebApi
         // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO: why not services.AddMvcCore(); whats the difference 
             services.AddMvc();
 
             services.AddDbContext<TaskItemDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("TaskBoardBuddyDb")));

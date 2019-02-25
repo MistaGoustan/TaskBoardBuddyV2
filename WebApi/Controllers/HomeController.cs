@@ -64,7 +64,7 @@ namespace TaskBoardBuddy.API.Controllers
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("Index"); // TODO
+                return RedirectToAction("Index");
             }
         }
 
@@ -78,14 +78,14 @@ namespace TaskBoardBuddy.API.Controllers
                     TaskItemId = 0,
                     Title = viewModel.Title,
                     Description = viewModel.Description,
-                    State = "ACTIVE", // TODO
+                    State = "ACTIVE",
                     CreatedDate = DateTime.Now
                 };
 
                 context.Add(taskItem);
                 context.SaveChanges();
 
-                return RedirectToAction("Index"); // TODO
+                return RedirectToAction("Index");
             }
         }
 
@@ -100,10 +100,14 @@ namespace TaskBoardBuddy.API.Controllers
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("Index"); // TODO
+                return RedirectToAction("Index");
             }
         }
 
+        /// <summary>
+        /// Deletes all completed tasks
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteAll()
         {
@@ -111,13 +115,13 @@ namespace TaskBoardBuddy.API.Controllers
             {
                 foreach (var item in context.TaskItems)
                 {
-                    if (item.State == "COMPLETED") // TODO
+                    if (item.State == "COMPLETED")
                         context.Remove(item);
                 }
 
                 context.SaveChanges();
 
-                return RedirectToAction("Index"); // TODO
+                return RedirectToAction("Index");
             }
         }
 
