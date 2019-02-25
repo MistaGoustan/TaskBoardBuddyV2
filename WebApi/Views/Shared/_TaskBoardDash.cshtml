@@ -14,15 +14,21 @@
 <div class="text-center">
     <h4>Dashboard</h4>
 
-    <p class="float-left">Total Tasks: @totalTasks&ensp;
+    <p class="float-left">
+        Total Tasks: @totalTasks&ensp;
         - &ensp;Active: @totalActiveTasks&ensp;
         - &ensp;Completed: @totalCompletedTasks
     </p>
 
     <div class="float-right">
         <p class="float-left">Filter by:&nbsp;</p>
-        
-        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange="GetFilteredTaskBoard(this.value)"})
+
+        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange = "GetFilteredTaskBoard(this.value)" })
+
+        @using (Html.BeginForm("DeleteAll", "Home", FormMethod.Post, new { @class = "task-board-dash-block" }))
+        {
+            <input type="submit" value="Delete Completed" />
+        }
     </div>
 </div>
 

@@ -87,3 +87,8 @@ body {
     display: inline-flex;
     width: 100%;
 }
+
+.task-board-dash-block{
+    display: inline;
+    padding: 0 5px 0 30px;
+}

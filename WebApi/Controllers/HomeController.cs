@@ -49,11 +49,28 @@ namespace TaskBoardBuddy.API.Controllers
                     TaskItemId = 0,
                     Title = viewModel.Title,
                     Description = viewModel.Description,
-                    State = "ACTIVE",
+                    State = "ACTIVE", // TODO
                     CreatedDate = DateTime.Now
                 };
 
                 context.Add(taskItem);
+                context.SaveChanges();
+
+                return RedirectToAction("Index"); // TODO
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAll()
+        {
+            using (var context = new TaskItemDbContext(_optionsBuilder.Options))
+            {
+                foreach (var item in context.TaskItems)
+                {
+                    if (item.State == "COMPLETED") // TODO
+                        context.Remove(item);
+                }
+
                 context.SaveChanges();
 
                 return RedirectToAction("Index"); // TODO
