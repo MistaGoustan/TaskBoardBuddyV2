@@ -18,17 +18,20 @@ namespace TaskBoardBuddy.API.Controllers
             => _optionsBuilder.UseSqlServer(configuration.GetConnectionString("TaskBoardBuddyDb"));
 
         [HttpGet("")]
-        [HttpGet("{filterId}")]
-        public IActionResult Index(string filterId)
+        [HttpGet("{filterState}")]
+        public IActionResult Index(string filterState)
         {
             using (var context = new TaskItemDbContext(_optionsBuilder.Options))
             {
+                filterState = filterState.ToUpper();
+
                 var taskItems = context.TaskItems.ToList();
-                var filterState = TaskItemFilterStates.All;
                 var taskItemViewModels = new List<TaskItemViewModel>();
 
-                if (Enum.TryParse(filterId, out filterState) && !filterState.Equals(TaskItemFilterStates.All))
-                    taskItems = taskItems.Where(item => item.State == filterState.ToString().ToUpper()).ToList();
+                if (filterState == "ACTIVE" || filterState == "COMPLTED")
+                    taskItems = taskItems.Where(item => item.State == filterState).ToList();
+                else
+                    filterState = "ALL";
 
                 foreach (var item in taskItems)
                 {

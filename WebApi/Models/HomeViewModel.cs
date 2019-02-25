@@ -5,6 +5,6 @@ namespace WebApi.Models
     public class HomeViewModel
     {
         public IEnumerable<TaskItemViewModel> TaskItems { get; set; }
-        public TaskItemFilterStates FilterState { get; set; }
+        public string FilterState { get; set; }
     }
 }

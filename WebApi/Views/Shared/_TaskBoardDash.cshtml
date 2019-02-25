@@ -1,13 +1,11 @@
 ﻿@model HomeViewModel
-@{ 
-    var totalTasks = Model.TaskItems.Count();
-
+@{
     var totalActiveTasks = Model.TaskItems
-                                .Where(taskItem => taskItem.State == TaskItemStates.Active.ToString().ToUpper())
+                                .Where(taskItem => taskItem.State == "ACTIVE")
                                 .Count();
 
     var totalCompletedTasks = Model.TaskItems
-                                   .Where(taskItem => taskItem.State == TaskItemStates.Completed.ToString().ToUpper())
+                                   .Where(taskItem => taskItem.State == "COMPLETED")
                                    .Count();
 }
 
@@ -15,7 +13,7 @@
     <h4>Dashboard</h4>
 
     <p class="float-left">
-        Total Tasks: @totalTasks&ensp;
+        Total Tasks: @(totalActiveTasks + totalCompletedTasks)&ensp;
         - &ensp;Active: @totalActiveTasks&ensp;
         - &ensp;Completed: @totalCompletedTasks
     </p>
@@ -23,7 +21,7 @@
     <div class="float-right">
         <p class="float-left">Filter by:&nbsp;</p>
 
-        @Html.DropDownListFor(m => m.FilterState, Html.GetEnumSelectList(typeof(TaskItemFilterStates)), new { @onchange = "FilterTasks(this.value)" })
+        @Html.DropDownListFor(m => m.FilterState, new SelectList(new[] { "All", "Active", "Completed" }), new { @onchange = "FilterTasks(this.value)" })
 
         @using (Html.BeginForm("DeleteAll", "Home", FormMethod.Post, new { @class = "task-board-dash-block" }))
         {

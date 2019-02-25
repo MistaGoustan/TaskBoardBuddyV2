@@ -9,9 +9,6 @@ namespace WebApi.Models
         [DataMember]
         public int Id { get; set; }
 
-        [DataMember]
-        public FooEnum Title { get; set; }
-
         [DataMember(Name = "FooText")]
         [Description("some text")]
         public string FooText { get; set; }
